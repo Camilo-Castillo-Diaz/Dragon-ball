@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Pontano+Sans:wght@300&family=Righteous&display=swap');
+body{
+    font-family: 'Pontano Sans', sans-serif;
+
+    background-color: grey;
+}
+
+#seleccionar-personaje{
+    display: flex;
+    flex-direction: column; /* hace en columnas los elementos*/
+    justify-content: center; /* centra +*/
+    align-items: center;/* centra */
+}
+.titulo{
+    color:white;
+    font-size: 35px;
+    font-family: 'Righteous', cursive;
+ 
+}
+.subtitulo{
+  color: white;
+  font-size: 30px;
+}
+
+.tarjetas,.tarjetas-ataques{
+display: flex;
+gap: 10px;
+}
+.tarjeta-dragon{
+    width: 200px;
+    height: 100px;
+    background:rgb(32, 185, 167);
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    display: flex;
+    color: white;
+    justify-content: center;
+    align-items: center;
+
+}
+.tarjeta-dragon img{
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+    padding: 10px;
+}
+#boton-mascota{
+    width: 180px;
+    height: 40px;
+    border-radius: 20px;
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    font-family: 'Pontano Sans', sans-serif;
+    margin-top: 20px;
+}
+input{
+    display: none;
+}
+input:checked + label {
+  background-color: red;
+  /* hover: */
+  /* :active */
+}
+#seleccionar-ataque{
+
+    flex-direction: column;
+    align-items: center;
+    
+}
+.boton-ataque{
+    background-color:yellow;
+    border-radius: 20px;
+    padding: 9px;
+    box-sizing: border-boxs;
+    border-color: transparent;
+    width: 100px;
+    color: red;
+    /* font-family: 'Pontano Sans', sans-serif; */
+}
+#mensajes{
+    width: 280px;
+    background: tomato;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+     align-items: center;
+    flex-direction: column;
+}
+#boton-reiniciar{
+    border: none;
+    color: blue;
+
+
+}
+.ataques{
+    display: grid;
+    grid-template-columns: 100px 100px;
+}
+#vida-jugador, #vida-enemigo{
+    font-size: 32px;
+    margin-bottom: 0;
+}
+.ataques-jugador,.ataques-enemigo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+@media (max-width:360px){
+.tarjetas,.tarjetas-ataques{
+        flex-direction: column;
+    }
+}
