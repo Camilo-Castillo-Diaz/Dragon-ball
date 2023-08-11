@@ -32,6 +32,7 @@ let botonhameja
 let botonkaioken
 let botonhakai
 let botones =[]
+let ataquesJugador = []
 let vidasJugador = 3
 let vidasEnemigo = 3
 
@@ -157,7 +158,19 @@ function seleccionarMascotaJugador() {
 function secuenciaAtaque(){
     botones.forEach((boton)=>{
     boton.addEventListener("click",(e)=>{
-        console.log(e)
+      if (e.target.textContent ==="🔥") {
+        ataquesJugador.push("hameja")
+        console.log(ataquesJugador)
+        boton.style.background="#112f58" 
+      }else if(e.target.textContent ==="💦"){
+        ataquesJugador.push("Kaioken")
+        console.log(ataquesJugador)
+        boton.style.background="#112f58" 
+      }else{
+        ataquesJugador.push("hakai")
+        console.log(ataquesJugador)
+        boton.style.background="#112f58" 
+      }
     })
     })
 }
