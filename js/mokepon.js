@@ -31,6 +31,7 @@ let ataquesDragon
 let botonhameja
 let botonkaioken
 let botonhakai
+let botones =[]
 let vidasJugador = 3
 let vidasEnemigo = 3
 
@@ -50,14 +51,14 @@ goku.ataques.push(
 {nombre :"🔥" , id: "boton-hameja"},
 {nombre :"🔥" , id: "boton-hameja"},
 {nombre :"🔥" , id: "boton-hameja"},
-{nombre :"💥" , id:"kaio ken"},
+{nombre :"💥" , id:"kaio-ken"},
 {nombre :"💦" , id:"hakai"},
 
 )
 vegeta.ataques.push(
-    {nombre :"💥" , id:"kaio ken"},
-    {nombre :"💥" , id:"kaio ken"},
-    {nombre :"💥" , id:"kaio ken"},
+    {nombre :"💥" , id:"kaio-ken"},
+    {nombre :"💥" , id:"kaio-ken"},
+    {nombre :"💥" , id:"kaio-ken"},
     {nombre :"💦" , id:"hakai"},
     {nombre :"🔥" , id: "boton-hameja"},
 
@@ -67,16 +68,16 @@ gohan.ataques.push(
     {nombre :"🔥" , id: "boton-hameja"},
     {nombre :"🔥" , id: "boton-hameja"},
     {nombre :"💦" , id:"hakai"},
-    {nombre :"💥" , id:"kaio ken"},
+    {nombre :"💥" , id:"kaio-ken"},
  )
  dragones.push(goku,vegeta,gohan)
-        
+
 
 
 
 function iniciarJuego () {
 
-    
+
     sectionSeleccionarAtaque.style.display = "none " // ocultar el html 
     // sectionreiniciar.style.display = "none"
 
@@ -96,9 +97,9 @@ function iniciarJuego () {
     })
 
     botonMascotaJugador.addEventListener('click', seleccionarMascotaJugador)// para darle funcion de click al boton
-    
-   
-    
+
+
+
     botonReiniciar.addEventListener("click", reiniciarJuego)
 }
 
@@ -142,18 +143,24 @@ function seleccionarMascotaJugador() {
         contenedorAtaques.innerHTML +=ataquesDragon
      })
       botonhameja = document.getElementById("boton-hameja")// buscar un elemento id en html
-      botonkaioken = document.getElementById("kaio ken")// buscar un elemento id en html
+      botonkaioken = document.getElementById("kaio-ken")// buscar un elemento id en html
       botonhakai =  document.getElementById("hakai")// buscar un elemento id en html
-     
-
+      botones = document.querySelectorAll(".BAtaque")
+    //   console.log (botones)
 
 
       botonhameja.addEventListener("click",ataqueHameja)//para darle funcion de click al boton
       botonkaioken.addEventListener("click",ataquekaioken)//para darle funcion de click al boton
       botonhakai.addEventListener("click",ataqueHakai)//para darle funcion de click al boton
-      
+
     }
-   
+function secuenciaAtaque(){
+    botones.forEach((boton)=>{
+    boton.addEventListener("click",(e)=>{
+        console.log(e)
+    })
+    })
+}
 
 function seleccionarMascotaEnemigo(){
     let mascotaAleatorio = aleatorio(0,dragones.length -1 )
@@ -166,7 +173,7 @@ function ataqueHameja (){
    ataqueAleatorioEnemigo()
 }
 function ataquekaioken (){
-    ataqueJugador="kaio ken"
+    ataqueJugador="kaio-ken"
     ataqueAleatorioEnemigo()
 }
 function ataqueHakai (){
@@ -179,38 +186,38 @@ function ataqueAleatorioEnemigo(){
     if(ataqueAleatorio==1){
         ataqueEnemigo = "hameja"
     }else if (ataqueAleatorio == 2){
-        ataqueEnemigo="kaio ken"
+        ataqueEnemigo="kaio-ken"
     }else{
         ataqueEnemigo= "hakai"
     }
     combate()
 
- 
+
 }
 
 
 function combate (){
-    
 
- 
+
+
     if(ataqueEnemigo==ataqueJugador){
    crearMensaje ("empate")
     }else if (ataqueJugador=="hameja"&& ataqueEnemigo=="hakai"){
       crearMensaje("ganaste")
       vidasEnemigo--
       spanVidasEnemigo.innerHTML=vidasEnemigo
-  
-    } else if(ataqueJugador=="kaio ken"&& ataqueEnemigo=="hameja"){
-      crearMensaje("ganaste")
-      vidasEnemigo--
-      spanVidasEnemigo.innerHTML=vidasEnemigo
-   
-    } else if (ataqueJugador==="hakai" && ataqueEnemigo=="kaio ken"){
+
+    } else if(ataqueJugador=="kaio-ken"&& ataqueEnemigo=="hameja"){
       crearMensaje("ganaste")
       vidasEnemigo--
       spanVidasEnemigo.innerHTML=vidasEnemigo
 
-     
+    } else if (ataqueJugador==="hakai" && ataqueEnemigo=="kaio-ken"){
+      crearMensaje("ganaste")
+      vidasEnemigo--
+      spanVidasEnemigo.innerHTML=vidasEnemigo
+
+
     } else {
       crearMensaje("perdiste")
       vidasJugador--
@@ -231,7 +238,7 @@ function combate (){
 
 
 function crearMensaje(resultado){
- 
+
 
 let nuevoAtaqueJugador = document.createElement("p")// crear nuevos elemtos de js a html
 let nuevoAtaqueEnemigo = document.createElement("p")// crear nuevos elemtos de js a html
@@ -247,19 +254,19 @@ ataqueDelEnemigo.appendChild(nuevoAtaqueEnemigo) // agarrar elementos de js para
 }
 
 function crearMensajeFinal(resultadoFinal){
-   
+
     sectionMensajes.innerHTML = resultadoFinal
 
    botonhameja.disabled = true
-   
+
    botonkaioken.disabled = true
-   
+
    botonhakai.disabled= true // bloquea boton
 
-   
+
    sectionreiniciar.style.display = "block"
    }
-    
+
 
     function reiniciarJuego(){
         location.reload() // reinica la pagina 
@@ -267,7 +274,7 @@ function crearMensajeFinal(resultadoFinal){
     function aleatorio(min,max){
         return Math.floor(Math.random()*(max - min + 1)+ min ) // crear numeros aleatorios de 1 y 0
         }
-    
+
 
 
 
