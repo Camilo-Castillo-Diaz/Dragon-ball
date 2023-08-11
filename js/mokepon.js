@@ -21,7 +21,7 @@ const contenedorAtaques = document.getElementById("contenedorAtaques")
 
 let dragones =[]
 let ataqueJugador =[]
-let ataqueEnemigo
+let ataqueEnemigo =[]
 let opcionesDeDragones
 let inputgoku
 let inputvegeta 
@@ -33,6 +33,11 @@ let botonkaioken
 let botonhakai
 let botones =[]
 let ataquesJugador = []
+let ataqueDragonEnemigo 
+let indexAtaqueEnemigo
+let indexAtaqueJugador
+let victoriasJugador = 0
+let victoriasEnemigo= 0
 let vidasJugador = 3
 let vidasEnemigo = 3
 
@@ -162,22 +167,30 @@ function secuenciaAtaque(){
         ataquesJugador.push("hameja")
         console.log(ataquesJugador)
         boton.style.background="#112f58" 
+        boton.disabled=true
       }else if(e.target.textContent ==="💦"){
         ataquesJugador.push("Kaioken")
         console.log(ataquesJugador)
         boton.style.background="#112f58" 
-      }else{
+        boton.disabled=true
+
+      }else {
         ataquesJugador.push("hakai")
         console.log(ataquesJugador)
         boton.style.background="#112f58" 
+        boton.disabled=true
+
       }
+      ataqueAleatorioEnemigo()
     })
     })
+    
 }
 
 function seleccionarMascotaEnemigo(){
     let mascotaAleatorio = aleatorio(0,dragones.length -1 )
     spanMascotaEnemigo.innerHTML =  dragones[mascotaAleatorio].nombre
+     ataqueDragonEnemigo = dragones[mascotaAleatorio].ataques
     secuenciaAtaque()
     }
 
@@ -195,56 +208,71 @@ function ataqueHakai (){
 }
 
 function ataqueAleatorioEnemigo(){
-    let ataqueAleatorio= aleatorio(1,3)
-    if(ataqueAleatorio==1){
-        ataqueEnemigo = "hameja"
-    }else if (ataqueAleatorio == 2){
-        ataqueEnemigo="kaio-ken"
+    let ataqueAleatorio= aleatorio(0,ataqueDragonEnemigo.length-1)
+    if(ataqueAleatorio==0 || ataqueAleatorio==1){
+        ataqueEnemigo.push("hameja")
+    }else if (ataqueAleatorio == 3 || ataqueAleatorio == 4){
+        ataqueEnemigo.push("kaio-ken")
     }else{
-        ataqueEnemigo= "hakai"
+        ataqueEnemigo.push("hakai")
     }
-    combate()
-
+    console.log( ataqueEnemigo)
+    iniciarPelea()
 
 }
-
+ function iniciarPelea(){
+    if (ataquesJugador.length === 5) {
+        combate ()
+ }
+}
+function indexAmbosOponentes(jugador,enemigo){
+    indexAtaqueJugador = ataquesJugador[jugador]
+    indexAtaqueEnemigo = ataqueEnemigo[enemigo]
+}
 
 function combate (){
-
-
-
-    if(ataqueEnemigo==ataqueJugador){
-   crearMensaje ("empate")
-    }else if (ataqueJugador=="hameja"&& ataqueEnemigo=="hakai"){
-      crearMensaje("ganaste")
-      vidasEnemigo--
-      spanVidasEnemigo.innerHTML=vidasEnemigo
-
-    } else if(ataqueJugador=="kaio-ken"&& ataqueEnemigo=="hameja"){
-      crearMensaje("ganaste")
-      vidasEnemigo--
-      spanVidasEnemigo.innerHTML=vidasEnemigo
-
-    } else if (ataqueJugador==="hakai" && ataqueEnemigo=="kaio-ken"){
-      crearMensaje("ganaste")
-      vidasEnemigo--
-      spanVidasEnemigo.innerHTML=vidasEnemigo
-
-
-    } else {
-      crearMensaje("perdiste")
-      vidasJugador--
-  spanVidasJugador.innerHTML=vidasJugador
+   for (let index = 0; index < ataquesJugador.length; index++) {
+    if (ataquesJugador[index] ===ataqueEnemigo[index]) {
+        indexAmbosOponentes(index,index)
+        crearMensaje ("empate")
+        
+    } else if (ataquesJugador[index] ==="hameja" && ataqueEnemigo[index]==="hakai"){
+        indexAmbosOponentes(index,index)
+        crearMensaje("ganaste")
+        victoriasJugador++
+        spanVidasJugador.innerHTML = victoriasJugador
+    }else if (ataquesJugador[index] ==="hakai" && ataqueEnemigo[index]==="hameja"){
+        indexAmbosOponentes(index,index)
+        crearMensaje("ganaste")
+        victoriasJugador++
+        spanVidasJugador.innerHTML = victoriasJugador
+    }else if (ataquesJugador[index] ==="kaioken" && ataqueEnemigo[index]==="hakai"){
+        indexAmbosOponentes(index,index)
+        crearMensaje("ganaste")
+        victoriasJugador++
+        spanVidasJugador.innerHTML = victoriasJugador
+    } else{
+        indexAmbosOponentes(index,index)
+        crearMensaje("perdiste")
+       victoriasEnemigo ++
+        spanVidasEnemigo.innerHTML = victoriasEnemigo
     }
+        
+    // 59
+    }
+
+
     // revisar vidas
     revisarVidas()
 
 }
   function revisarVidas(){
-    if (vidasEnemigo ==0){
-     crearMensajeFinal ("felicitaciones ganaste")
-    }else if (vidasJugador == 0){
-     crearMensajeFinal ("lo siento... perdiste")
+    if (victoriasJugador === victoriasEnemigo){
+     crearMensajeFinal ("esto fue un empate")
+    }else if (victoriasJugador > victoriasEnemigo){
+     crearMensajeFinal ("ganaste")
+    }else{
+        crearMensajeFinal("perdiste!!")
     }
 
   }
@@ -257,8 +285,8 @@ let nuevoAtaqueJugador = document.createElement("p")// crear nuevos elemtos de j
 let nuevoAtaqueEnemigo = document.createElement("p")// crear nuevos elemtos de js a html
 
 sectionMensajes.innerHTML = resultado
-nuevoAtaqueJugador.innerHTML = ataqueJugador
-nuevoAtaqueEnemigo.innerHTML = ataqueEnemigo
+nuevoAtaqueJugador.innerHTML = indexAtaqueJugador
+nuevoAtaqueEnemigo.innerHTML = indexAtaqueEnemigo
 
 
 ataqueDelJugador.appendChild(nuevoAtaqueJugador) // agarrar elementos de js para aplicarselos a html
@@ -270,11 +298,8 @@ function crearMensajeFinal(resultadoFinal){
 
     sectionMensajes.innerHTML = resultadoFinal
 
-   botonhameja.disabled = true
 
-   botonkaioken.disabled = true
-
-   botonhakai.disabled= true // bloquea boton
+   // bloquea boton
 
 
    sectionreiniciar.style.display = "block"
